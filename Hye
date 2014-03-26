@@ -1,0 +1,1430 @@
+http://rmtracked.intranet.point/TE
+ set sqlprompt 'DINT >';
+ set sqlprompt 'PPR >';
+  set sqlprompt 'PRODUCTION=>';
+  SET SQLPROMPT "_USER'@PPR' _DATE> "
+  SET SQLPROMPT "_USER'@'_CONNECT_IDENTIFIER _2 >> "
+  SET SQLPROMPT "_USER'@'_CONNECT_IDENTIFIER _1 >> "
+  SELECT rpad(sys_context('USERENV', 'INSTANCE_NAME'), 17) current_instance FROM dual;
+  
+  select profile from dba_users where username = 'ORACLESUPPORT';
+select resource_name, limit from dba_profiles where profile=
+( select profile from dba_users where username = 'ORACLESUPPORT');
+
+
+  +919963495053
+  19963495053
+SET TIME ON
+ set lines 80 pages 20000 webspprd 
+ dba_part_key_columns
+ 
+ find / -type f -name "login.sql" 2>/dev/null
+ find /var/opt/rmtracked -size +10000 -exec ls -ltr {} \;
+ host grep  Interim Report - Event Extract Ended - Number of Detail records written /var/opt/rmtracked/todsprd/logs/techpack_msg_log | tail -5
+ host grep  Interim Report - Event Extract /var/opt/rmtracked/todsprd/logs/techpack_msg_log 
+ 
+ host zcat /var/opt/rmtracked/todsprd/logs/techpack_msg_log* || grep  Interim Report - Event Extract Ended - Number of Detail records written  | tail -5
+ 
+ 
+zcat 20131102E* | grep T,20131102
+
+alter session set nls_date_format='YYYY-MM-DD HH24:MI:SS';
+alter PACKAGE ENQ_PKG compile body ;
+
+Type Code   Type Description  	Acts On Level
+C   Check on a table 	Column
+O   Read Only on a view 	Object
+P   Primary Key 	Object
+R   Referential AKA Foreign Key 	Column
+U   Unique Key 	Column
+V   Check Option on a view 	Object
+CONSTRAINT_TYPE (from 11gR2 docs)
+C - Check constraint on a table
+P - Primary key
+U - Unique key
+R - Referential integrity
+V - With check option, on a view
+O - With read only, on a view
+H - Hash expression
+F - Constraint that involves a REF column
+S - Supplemental logging
+
+
+______________________________
+  set long 999999999
+  select dbms_metadata.get_ddl ('TABLE', 'OBJECT_EVENT', 'EVENT')
+    -- into v_mview_sql
+     from dual ;
+
+================
+select t.sql_text,s.osuser,s.PROCESS,s.username,s.osuser
+from gv$sqltext_with_newlines t,gV$SESSION s
+where t.address =s.sql_address
+and t.hash_value = s.sql_hash_value
+ and s.status = 'ACTIVE'  and s.osuser = 'hvardhan'
+and s.username <> 'SYSTEM' --and (s.username like '%ORACLESUPPORT%' ) 
+--and (t.sql_text like '%params%' or t.sql_text like '%PARAMS%' )
+--and s.osuser='webspprd'
+order by s.sid,t.piece; 
+set lines 100 pages 999
+col ID format a15
+select username
+,      sid || ',' || serial# "ID"
+,      status
+,      last_call_et "Last Activity"
+from   v$session
+where  username is not null
+order by status desc
+,        last_call_et desc
+/
+
+
+select * from ALL_TAB_MODIFICATIONS where TIMESTAMP >= sysdate - 3/24 
+AND TABLE_NAME ='' ;
+=======================
+_______________________________________________________
+select S.USERNAME, s.sid, s.osuser, t.sql_id, sql_text
+from gv$sqltext_with_newlines t,gV$SESSION s
+where t.address =s.sql_address
+and t.hash_value = s.sql_hash_value
+--and s.status = 'ACTIVE'
+and s.username <> 'SYSTEM'     and s.username  = 'EVENT'
+and s.osuser='hvardhan' ;
+order by s.sid,t.piece; 
+
+select S.USERNAME, s.sid, s.osuser, t.sql_id, sql_text
+from gv$sqltext_with_newlines t,gV$SESSION s
+where t.address =s.sql_address
+and t.hash_value = s.sql_hash_value
+and s.status = 'ACTIVE'
+and s.username <> 'SYSTEM'     and s.username  = 'EVENT'
+and s.osuser='hvardhan' ;
+
+select username,logon_time,status,last_call_et,machine from gv$session where username like '%JAVA%';
+
+_______________________________________________________
+    select dbms_metadata.get_ddl ('MATERIALIZED_VIEW', mview_name, owner)
+     -- into v_mview_sql
+     from all_mviews
+    where owner = 'MD' and mview_name = 'MMV_TP_TRACKED_ITEM_BARCODE_PX';
+	
+	select dbms_metadata.get_ddl ('INDEX', '&INDEX', 'EVENT')
+    -- into v_mview_sql
+     from dual ;
+	
+	 
+   select dbms_metadata.get_dependent_ddl ('MATERIALIZED_VIEW_LOG',
+                                           referenced_name,
+                                           referenced_owner
+                                          )
+     -- into v_mview_log_sql
+     from dba_dependencies
+    where referenced_type = 'TABLE'
+      and referenced_name != 'MV_TP_BCD_AGRMNT_LN_DTL'
+      and owner = 'EVENT'
+      and name = 'MV_TP_BCD_AGRMNT_LN_DTL';
+	  
+
+column CONSTRAINT_TYPE  format a2
+column SEARCH_CONDITION format a30
+column column_name      format a30
+select dba_constraints.TABLE_NAME,dba_cons_columns.COLUMN_NAME,dba_constraints.CONSTRAINT_TYPE,dba_constraints.SEARCH_CONDITION,dba_constraints.CONSTRAINT_NAME from dba_constraints,dba_cons_columns where 
+dba_cons_columns.CONSTRAINT_NAME = dba_constraints.CONSTRAINT_NAME and
+dba_cons_columns.TABLE_NAME = dba_constraints.TABLE_NAME and 
+dba_constraints.CONSTRAINT_TYPE='P' 
+and dba_cons_columns.TABLE_NAME = upper('events')
+order by dba_constraints.TABLE_NAME,dba_cons_columns.COLUMN_NAME;
+column CONSTRAINT_TYPE   clear ;
+column SEARCH_CONDITION  clear ;
+column column_name       clear ;
+
+column COLUMN_NAME format a60
+
+select column_name from dba_ind_columns where table_name =upper('mq_jdl_aud');
+select column_name from dba_part_key_columns where name =upper('mq_jdl_aud');
+select column_name,name from dba_part_key_columns where name  like upper('object%') and OBJECT_TYPE ='TABLE';
+column CONSTRAINT_TYPE  format a2
+column SEARCH_CONDITION noprint
+column column_name      format a30
+select dba_constraints.owner, dba_constraints.TABLE_NAME,dba_cons_columns.COLUMN_NAME,dba_constraints.CONSTRAINT_TYPE,dba_constraints.SEARCH_CONDITION,dba_constraints.CONSTRAINT_NAME from dba_constraints,dba_cons_columns where 
+dba_cons_columns.CONSTRAINT_NAME = dba_constraints.CONSTRAINT_NAME and
+dba_cons_columns.TABLE_NAME = dba_constraints.TABLE_NAME and 
+dba_constraints.CONSTRAINT_TYPE='P' 
+and dba_constraints.owner in ('EVENT','TECHPACK')
+and dba_cons_columns.TABLE_NAME = upper('object')
+order by dba_constraints.owner,dba_constraints.TABLE_NAME,dba_cons_columns.COLUMN_NAME;
+column CONSTRAINT_TYPE   clear ;
+column SEARCH_CONDITION  clear ;
+column column_name       clear ;
+-->>Check flow of SCAN in TODS DB---
+
+  --Scans are checked in EVENTS  table.
+
+SELECT count(*),created_by FROM event.events WHERE create_date =20140319 
+group by created_by;
+
+
+SELECT count(*),(to_char(created_datetime,'HH24MI'))as "hour" FROM event.events WHERE create_date=20131205
+-- and created_datetime >= to_date('05-DEC-2013 07:00:00','DD-MON-YYYY HH24:MI:SS')
+group by to_char(created_datetime,'HH24')
+order by to_number(to_char(created_datetime,'HH24'));
+
+SELECT 
+count(*),TRUNC(created_datetime,'HH24') FROM event.events WHERE create_date=20131209
+group by TRUNC(created_datetime,'HH24')
+order by TRUNC(created_datetime,'HH24');
+
+explain plan set statement_id ='BYE12' for
+select count(*),to_char(CREATED,'HH24') from mq_jdl_Aud where CREATED >= trunc(sysdate)  + 18/24
+group by to_char(CREATED,'HH24') order by to_number(to_char(CREATED,'HH24')) ;
+select count(*),trunc(CREATED,'HH24') from mq_jdl_Aud where CREATED >= trunc(sysdate)  + 11/24
+group by trunc(CREATED,'HH24') order by trunc(CREATED,'HH24') ;
+
+SELECT count(*),trunc(created_datetime,'HH24') FROM event.events WHERE create_date=20131022
+group by trunc(created_datetime,'HH24') order by trunc(created_datetime,'HH24') ;
+
+explain plan set statement_id ='BYE123' for
+select count(*),to_char(CREATED,'HH24')||':'||(trunc(to_char(CREATED,'MI')/10)) * 10 from mq_jdl_Aud where CREATED >= trunc(sysdate) -- + 15/24
+group by to_char(CREATED,'HH24')||':'||(trunc(to_char(CREATED,'MI')/10)) * 10 order by to_char(CREATED,'HH24')||':'||(trunc(to_char(CREATED,'MI')/10)) * 10 ;
+
+
+
+SELECT MAX(created_datetime) FROM event.events WHERE create_date=20140319 AND created_by='BBAY';
+SELECT MAX(created_datetime) FROM event.events WHERE create_date=20140319 and created_by='VSCAN';
+SELECT MAX(created_datetime) FROM event.events WHERE create_date=20140319 and CREATED_BY='Pre Advice';
+select count(*),to_char(to_date(to_char(CREATE_DATE),'YYYYMMDD'),'MON-YYYY') from events where
+CREATE_DATE >= 20130901 and RM_EVENT_CODE='EVKOP'
+group by to_char(to_date(to_char(CREATE_DATE),'YYYYMMDD'),'MON-YYYY')
+
+
+SELECT COUNT(*) COUNT1 FROM MQ_RECEIVED;
+select count(*) COUNT2 from event.stage_pre_advice_data;
+select count(*) COUNT3 from event.stage_pre_advice_item;
+--(Result should be 0 i.e there is no stuck PreAdvice)
+Queue
+ORA.NT.EV.01 
+and
+ESB.SMTP.DELAY.01
+
+select TABLE_NAME,TABLE_TYPE,LAST_ANAL_START,LAST_ANAL_END from TABLE_STATS_REF
+order by LAST_ANAL_END desc ;
+
+
+-------------------------------JOBS---------------------------------------------
+
+ -->> Reconciliation --
+ --(Status 3 means all is well)
+--timing 12.30 am
+column status format a10
+column Day    format  a5
+select SUBSTR(FUNCTION_NAME,1,20) FUNCTION_NAME, TO_CHAR(START_TIME,'DD-MM-YYYY HH24:MI:SS') START_DATE,
+TO_CHAR(END_TIME,'DD-MM-YYYY HH24:MI:SS') END_DATE ,SUBSTR(SCHEDULER_IP,1,15) SCHEDULER_IP, ERROR_CODE
+,to_char(status) status/*,
+TO_CHAR(TO_CHAR(END_TIME,'YYYYMMDDHH24MISS') - to_CHAR(START_TIME,'YYYYMMDDHH24MISS'), '09G99G99', 'NLS_NUMERIC_CHARACTERS=":."') as "run_duration"*/
+,to_char(trunc(to_number(END_TIME - START_TIME))) as "Day"
+,to_char((trunc(sysdate) + (END_TIME - START_TIME)),'HH24:MI:SS') as "duration"
+from event.scheduler_management where START_TIME >= SYSDATE - 3
+and FUNCTION_NAME in ('RFC') 
+and status = 3
+order by  to_number(trunc(to_number(END_TIME - START_TIME))),start_time;
+column status  clear ;
+column Day     clear ;
+
+
+====================
+column status format a10
+column Day    format  a5
+select SUBSTR(FUNCTION_NAME,1,20) FUNCTION_NAME, TO_CHAR(START_TIME,'DD-MM-YYYY HH24:MI:SS') START_DATE,
+TO_CHAR(END_TIME,'DD-MM-YYYY HH24:MI:SS') END_DATE ,SUBSTR(SCHEDULER_IP,1,15) SCHEDULER_IP, ERROR_CODE
+,to_char(status) status
+from event.scheduler_management where START_TIME >= trunc(SYSDATE) - 1
+and FUNCTION_NAME in ('RECON','NON_ADVICE_RECON','PREADVICE_RECON','RTS_RECON') 
+order by  start_time;
+
+
+
+
+====================
+
+
+SELECT count(*)FROM event.events WHERE rm_event_code='EVZSO' and create_date=20140319 ;
+select max(CREATED_DATETIME) FROM event.events WHERE rm_event_code='EVZSO' and create_date=20140319 ;
+--and CREATED_DATETIME >= '27-NOV-2013 07:30:00'
+;
+15-DEC-2013 22:59:05
+select count(*) from event.events WHERE rm_event_code='EVZSO' and CREATED_DATETIME > to_date
+('16-DEC-2013 00:01:05','DD-MON-YYYY HH24:MI:SS') ;
+
+ select count(*) from object_event,events where events.EVENT_ID = object_event.EVENT_ID and
+events.CREATE_DATE = 20131223  ;
+--successfully billed
+
+---Ready for Collection
+--runs at 7.10 am
+column status format a10
+column Day    format  a5
+select SUBSTR(FUNCTION_NAME,1,20) FUNCTION_NAME, TO_CHAR(START_TIME,'DD-MM-YYYY HH24:MI:SS') START_DATE,
+TO_CHAR(END_TIME,'DD-MM-YYYY HH24:MI:SS') END_DATE ,SUBSTR(SCHEDULER_IP,1,15) SCHEDULER_IP, ERROR_CODE
+,to_char(status) status
+,to_char(trunc(to_number(END_TIME - START_TIME))) as "Day"
+,to_char((trunc(sysdate) + (END_TIME - START_TIME)),'HH24:MI:SS') as "duration"
+from event.scheduler_management where START_TIME >= SYSDATE - 1
+and FUNCTION_NAME in ('RFC') 
+order by  to_number(trunc(to_number(END_TIME - START_TIME))),start_time;
+column status  clear ;
+column Day     clear ;
+
+--------------------------
+
+ -->>INFERRED _DEL--
+ --8 AM,should take less than an hour
+
+
+column log_date          format a18
+column actual_start_date format a18
+column job_name          format a14
+column status            format a10
+column run_duration      format a13
+column additional_info   format a20
+              select to_char(log_date,'DD-MON-YY HH24:MI:SS') log_date
+              ,job_name , status
+              ,to_char(actual_start_date,'DD-MON-YY HH24:MI:SS') AS actual_start_date
+              ,to_char(REQ_START_DATE,'DD-MON-YY HH24:MI:SS') AS when_start_date
+              ,run_duration			  
+              ,additional_info
+              from  DBA_scheduler_job_run_details
+              where LOG_DATE between systimestamp - 2 and systimestamp
+              and job_name = 'INFERRED_DEL'
+              order by actual_start_date;
+			   column log_date                 clear ;
+			   column actual_start_date        clear ;
+			   column job_name                 clear ;
+			   column status                   clear ;
+			   column run_duration             clear ;
+			   column additional_info          clear ;
+			  
+			  =====================================================
+column JOB_NAME      format 30
+			  
+column log_date     format a18
+column actual_start_date format a18
+column job_name format a14
+column status format a10
+column run_duration format a13
+column additional_info noprint
+              select owner,to_char(log_date,'DD-MON-YY HH24:MI:SS') log_date
+              ,job_name , status
+              ,to_char(actual_start_date,'DD-MON-YY HH24:MI:SS') AS actual_start_date
+              ,to_char(REQ_START_DATE,'DD-MON-YY HH24:MI:SS') AS when_start_date
+              ,run_duration
+			  ,trunc((extract( day from (run_duration) )*24*60*60 +
+extract( hour from (run_duration) )*60*60 +  extract( minute from (run_duration) )*60 +
+extract( second from (run_duration)) ) / 60)  "AVG_TIM_MINS"
+              ,additional_info
+              from  DBA_scheduler_job_run_details
+              where LOG_DATE between  (systimestamp - 1.5 ) and systimestamp
+              -- and job_name = 'INFERRED_DEL'
+			  and trunc((extract( day from (run_duration) )*24*60*60 +
+extract( hour from (run_duration) )*60*60 +  extract( minute from (run_duration) )*60 +
+extract( second from (run_duration)) ) / 60) > 50 
+and job_name <> 'INT_EXT_EVENT'
+              order by actual_start_date;
+			  
+column log_date format a18
+column actual_start_date format a18
+column job_name format a14
+column status format a10
+column duration format a10
+column run_duration format a15
+column additional_info format a20
+              select run_duration
+              --,to_char(REQ_START_DATE,'DD-MON-YY HH24:MI:SS') AS when_start_date
+              , to_char(extract( day from (run_duration) )*24 +
+               extract( hour from (run_duration) ))||':'
+			   ||to_char(extract( minute from (run_duration) ))||':'
+			   ||to_char(extract( second from (run_duration) )) as "DURATION"
+               --extract( hour from (run_duration) ))--to_char(extract( minute from (run_duration) ))||':'
+              ,additional_info
+              from  DBA_scheduler_job_run_details
+              where LOG_DATE between systimestamp - 3 and systimestamp
+              and job_name = 'INFERRED_DEL'
+              order by actual_start_date;
+              
+              
+=============================================================================================
+column Elapsed_Time format a25
+select substr(OWNER,1,10) as "Owner",
+substr(JOB_NAME,1,25) as "Job",
+substr(JOB_SUBNAME,1,15) as "JobSub",
+SESSION_ID as "Session_Id",
+SLAVE_PROCESS_ID as "Slave_Process_Id",
+RUNNING_INSTANCE as "Running_instance",
+ELAPSED_TIME as "Elapsed_Time"
+from dba_scheduler_running_jobs;
+
+
+--------------------------------
+
+-->>PARTITION MAINTAINANCE --
+--Check on Monday
+--there are two jobs :Delete partition(Sat){PURGE} and create partition(Sun)
+
+column log_date format a18
+column actual_start_date format a18
+column job_name format a25
+column status format a9
+column run_duration format a13
+column additional_info format a20
+              select to_char(log_date,'DD-MON-YY HH24:MI:SS') log_date
+              ,job_name , status
+              ,to_char(actual_start_date,'DD-MON-YY HH24:MI:SS') AS actual_start_date
+              ,to_char(REQ_START_DATE,'DD-MON-YY HH24:MI:SS') AS when_start_date
+              ,run_duration
+              ,additional_info
+              from  dba_scheduler_job_run_details
+              where LOG_DATE between systimestamp - 3 and systimestamp
+              and job_name like '%PART%'
+              order by actual_start_date;
+
+select count(mail_item_id) from RETAINED_MAIL_ITM a where not exists( select 1 from mail_item  b where a.mail_item_id=b.mail_item_id);
+
+select count(mail_item_id) from RETAINED_MAIL_ITM_ID a where not exists( select 1 from mail_item_id  b where a.mail_item_id=b.mail_item_id);
+
+select count(*) from RETAINED_TRACKED_ITM_BARCODE a where not exists( select 1 from tracked_item_barcode  b where a.IDENTIFYING_MECHANISM_ID=b.IDENTIFYING_MECHANISM_ID);
+
+------------------------------------
+
+
+-->>STATS GATHERING (Check daily)
+--two jobs: daily and weekly
+--daily runs at 10.00 pm
+
+column log_date format a18
+column actual_start_date format a18
+column job_name format a25
+column status format a9
+column run_duration format a13
+column additional_info format a20
+              select to_char(log_date,'DD-MON-YY HH24:MI:SS') log_date
+              ,job_name , status
+              ,to_char(actual_start_date,'DD-MON-YY HH24:MI:SS') AS actual_start_date
+              ,to_char(REQ_START_DATE,'DD-MON-YY HH24:MI:SS') AS when_start_date
+              ,run_duration
+              ,additional_info
+              from  dba_scheduler_job_run_details
+              where LOG_DATE between systimestamp - 21 and systimestamp
+              and job_name like '%NON_BILLABLE_JOB%'
+              order by actual_start_date;
+
+ --checks stale type column to see that insertion deletion can be done
+-------------------------------------------
+09:30 am chalegi 
+-->>BARCODE EXTRACT JOB
+column log_date format a18
+column actual_start_date format a18
+column job_name format a25
+column status format a9
+column run_duration format a13
+column additional_info format a20
+              select to_char(log_date,'DD-MON-YY HH24:MI:SS') log_date
+              ,job_name , status
+              ,to_char(actual_start_date,'DD-MON-YY HH24:MI:SS') AS actual_start_date
+              ,to_char(REQ_START_DATE,'DD-MON-YY HH24:MI:SS') AS when_start_date
+              ,run_duration
+              ,additional_info
+              from  all_scheduler_job_run_details
+              where LOG_DATE between systimestamp - 20 and systimestamp
+              and job_name like 'QOS_BARCODE_EXTRACT_JOB%'
+              order by actual_start_date;
+
+----------------------------------------------
+
+-->> REDLANDIS EXTRACT : Event extracts, PA Extracts, Wire no Extarct, Barcode Extarct -- Use repdb (Reports)
+--Event extract hourly
+--Pre Advice extract 3 am
+-- Barcode 3 am
+--Wire number 3am
+
+column log_date           format a18 ;
+column actual_start_date  format a18  ;
+column job_name           format a19 ;
+column status             format a9 ;
+column run_duration       format a13 ;
+column additional_info    format a20 ;
+              select to_char(log_date,'DD-MON-YY HH24:MI:SS') log_date
+              ,job_name , status
+              ,to_char(actual_start_date,'DD-MON-YY HH24:MI:SS') AS actual_start_date
+              ,to_char(REQ_START_DATE,'DD-MON-YY HH24:MI:SS') AS when_start_date
+              ,run_duration
+              ,additional_info
+              from  dba_scheduler_job_run_details
+              where LOG_DATE between systimestamp - .5 and systimestamp  
+              and job_name like '%EXT%'
+              order by actual_start_date;
+			  
+			  column log_date           clear ;       
+			  column actual_start_date  clear ;
+			  column job_name           clear ; 
+			  column status             clear ; 
+			  column run_duration       clear ;
+			  column additional_info    clear ;
+			  
+			  
+			  
+column log_date format a18
+column actual_start_date format a18
+column job_name format a25
+column status format a9
+column run_duration format a13
+column additional_info format a20
+column substr(job_name,1,14) noprint
+              select to_char(log_date,'DD-MON-YY HH24:MI:SS') log_date
+              ,job_name , status
+              ,to_char(actual_start_date,'DD-MON-YY HH24:MI:SS') AS start_date
+              ,to_char(REQ_START_DATE,'DD-MON-YY HH24:MI:SS') AS Req_start_date
+              ,run_duration
+			   --,trunc(( extract( day from (run_duration) )*24*60*60 + 
+--extract( hour from (run_duration) )*60*60 +  extract( minute from (run_duration) )*60 + 
+--extract( second from (run_duration)) ) / 60)  "MINUTES"
+ --,trunc(( extract( day from (run_duration) )*24*60*60 + 
+--extract( hour from (run_duration) )*60*60 +  extract( minute from (run_duration) )*60 + 
+--extract( second from (run_duration)) ) / 60)/60  "HOUR"
+			  ,additional_info
+              from  dba_scheduler_job_run_details
+              where LOG_DATE between systimestamp - 1  and systimestamp 
+              and ( job_name like '%EXT%' or job_name ='INFERRED_DEL'
+			  -- or job_name like '%PART%'
+			  or job_name like '%STAT%'
+			  or job_name like '%NON_BILLABLE_JOB%'
+			  )
+              order by substr(job_name,1,14),actual_start_date;
+
+
+
+
+column log_date format a18
+column actual_start_date format a18
+column job_name format a25
+column status format a9
+column run_duration format a13
+column additional_info format a20
+              select  job_name,run_duration,
+			  status
+              ,to_char(actual_start_date,'DD-MON-YY HH24:MI:SS') AS actual_start_date
+              ,to_char(REQ_START_DATE,'DD-MON-YY HH24:MI:SS') AS when_start_date
+              from  dba_scheduler_job_run_details
+              where  LOG_DATE between systimestamp - 6 and systimestamp and 
+               job_name in
+ ('KNA1_EXTRACT','KNVP_EXTRACT','DATA_FIX_JOB_MONITOR','BARCODE_RANGE_CHECK_JOB','DELETE_APPLICATIONAUDIT_DATA','FSN_ERROR_GEN','RMTHV_ESBAUDLOG_DEL','ARCHIVE_JOB','DATA_FIX_JOB_MONITOR','DELETE_APPLICATIONAUDIT_DATA','FSN_ERROR_GEN','RMTHV_ESBAUDLOG_DEL','INSERT_PREADVICE_ERROR_TEMP')			   
+              order by job_name;
+
+--Check location cd /var/opt/rmtracked/todsprd/dataarch to see whether files are made.
+host wc -l /var/opt/rmtracked/todsprd/dataarch/20131113E*
+host wc -l /var/opt/rmtracked/todsppr/dataarch/20131111E*
+select JOB_NAME from all_scheduler_jobs where JOB_NAME like '%INT_EXT_EVENT%' order by to_number(substr(JOB_NAME,14,2)) ;
+column START_DATE format a50
+column REPEAT_INTERVAL format a60
+select JOB_NAME,START_DATE,REPEAT_INTERVAL from all_scheduler_jobs where JOB_NAME like '%INT_EXT%' order by to_number(substr(JOB_NAME,-1,2)) ;
+================================================================================================
+select 
+trunc(( extract( day from (run_duration) )*24*60*60 + 
+extract( hour from (run_duration) )*60*60 +  extract( minute from (run_duration) )*60 + 
+extract( second from (run_duration)) ) / 60) as  "AVG_TIM_MINS"
+,job_name,run_duration,log_date,to_char(actual_start_date,'DD-MON-YY HH24:MI:SS') AS actual_start_date 
+from  dba_scheduler_job_run_details
+where trunc(( extract( day from (run_duration) )*24*60*60 + 
+extract( hour from (run_duration) )*60*60 +  extract( minute from (run_duration) )*60 + 
+extract( second from (run_duration)) ) / 60) >= 50
+and REQ_START_DATE between sysdate - 2 and sysdate
+and job_name not like '%INT_EXT_EVENT%'
+order by  (to_char(REQ_START_DATE,'DD-MM-YYYY'))
+;
+
+
+select 
+trunc(avg( extract( day from (run_duration) )*24*60*60 + 
+extract( hour from (run_duration) )*60*60 +  extract( minute from (run_duration) )*60 + 
+extract( second from (run_duration)) ) / 60)  "AVG_TIM_MINS"
+,(to_char(REQ_START_DATE,'DAY'))  "START_TIME"  
+from  dba_scheduler_job_run_details
+where 
+job_name like '%INT_EXT_EVENT%'
+group by  (to_char(REQ_START_DATE,'DAY'))
+order by  (to_char(REQ_START_DATE,'DAY')) ;
+
+
+select
+trunc(avg( extract( day from (run_duration) )*24*60*60 +
+extract( hour from (run_duration) )*60*60 +  extract( minute from (run_duration) )*60 +
+extract( second from (run_duration)) ) / 60)  "AVG_TIM_MINS"
+,to_number(to_char(REQ_START_DATE,'YYYYMMDD'))  "START_TIME"
+from  dba_scheduler_job_run_details
+where
+job_name like '%INT_EXT_EVENT%'
+group by  to_number(to_char(REQ_START_DATE,'YYYYMMDD'))
+order by  to_number(to_char(REQ_START_DATE,'YYYYMMDD')) ;
+
+select 
+trunc(avg( extract( day from (run_duration) )*24*60*60 + 
+extract( hour from (run_duration) )*60*60 +  extract( minute from (run_duration) )*60 + 
+extract( second from (run_duration)) ) / 60)  "AVG_TIM_MINS"
+,trunc(max( extract( day from (run_duration) )*24*60*60 + 
+extract( hour from (run_duration) )*60*60 +  extract( minute from (run_duration) )*60 + 
+extract( second from (run_duration)) ) / 60)  "MAX_TIM_MINS",
+trunc(min( extract( day from (run_duration) )*24*60*60 + 
+extract( hour from (run_duration) )*60*60 +  extract( minute from (run_duration) )*60 + 
+extract( second from (run_duration)) ) / 60)  "MIN_TIM_MINS",
+
+,job_name 
+from  dba_scheduler_job_run_details
+where 
+job_name in 
+('KNA1_EXTRACT','KNVP_EXTRACT','DATA_FIX_JOB_MONITOR','BARCODE_RANGE_CHECK_JOB','DELETE_APPLICATIONAUDIT_DATA','FSN_ERROR_GEN','RMTHV_ESBAUDLOG_DEL','ARCHIVE_JOB','DATA_FIX_JOB_MONITOR','DELETE_APPLICATIONAUDIT_DATA','FSN_ERROR_GEN','RMTHV_ESBAUDLOG_DEL','INSERT_PREADVICE_ERROR_TEMP')			   
+group by  job_name order by job_name;
+
+column log_date format a18
+column actual_start_date format a18
+column job_name format a30
+column status format a9
+column run_duration format a13
+column additional_info format a70
+              select  job_name,run_duration,
+			  status
+              ,to_char(actual_start_date,'DD-MON-YY HH24:MI:SS') AS actual_start_date
+              ,to_char(REQ_START_DATE,'DD-MON-YY HH24:MI:SS') AS when_start_date
+              from  dba_scheduler_job_run_details
+              where  LOG_DATE between systimestamp - 6 and systimestamp and 
+               job_name in
+ ('KNA1_EXTRACT','KNVP_EXTRACT','DATA_FIX_JOB_MONITOR','BARCODE_RANGE_CHECK_JOB','DELETE_APPLICATIONAUDIT_DATA','FSN_ERROR_GEN','RMTHV_ESBAUDLOG_DEL','ARCHIVE_JOB','DATA_FIX_JOB_MONITOR','DELETE_APPLICATIONAUDIT_DATA','FSN_ERROR_GEN','RMTHV_ESBAUDLOG_DEL','INSERT_PREADVICE_ERROR_TEMP')			   
+              
+group by  job_name order by job_name; 
+
+
+
+  select * from (
+         select  CREATED_DATE,COMMERCIAL_ACCOUNT_NUMBER,ACCOUNT_NAME
+         ,rank() over (order by COMMERCIAL_ACCOUNT.CREATED_DATE desc) as rnk
+         from COMMERCIAL_ACCOUNT where lower(COMMERCIAL_ACCOUNT.ACCOUNT_NAME) like '%amazon%')
+         where rnk <= 15 ;
+		 
+		 
+		 
+		 
+
+		 
+		 
+
+
+
+
+======================================================================================================
+
+
+
+
+------------------------------ SALES ORDER PROCESSING-------------------------------
+
+	Please follow the below mentioned steps to restart the MQSALESORDER session to clear the MQ queue.
+1)	Login to huimpdb1
+2)	Enter : su - rmtrackd and Passwd: orange$$
+3)	Enter : runmqsc QMORA01P --(manager)
+4)	Then to check the depth of the queue : dis q(BIG.PERFORMANCE.TRACKING.OUT_L) curdepth
+
+dis q(ESB_BK.ORACLE_REC.SO.01.OUT_V1) curdepth 
+dis q(PR.DB.01.OUT_L) curdepth
+DIS Q(*)
+
+	Please follow the same steps for checking the queue on HUIMPDB2 as well with only one change.
+
+On Step 3) Enter : runmqsc QMORA02P
+
+The rest of the Steps as as mentioned above.
+
+The MQ queue depth can also be tracked from IE link (but it takes some 15 min to update latest depth).
+http://10.220.206.79/cgi-bin/mq_home.cgi    (Open the link with Proxy disabled on VPN)
+Once link has opened , please select " All Environments" and search for huimpdb1/huimpdb2 when the link opens and you can see the current depth of the MQ queue from where Sales Order messages are picked up by Pro*C code.
+
+
+
+--------------------------Check partitions of the database Tables ------------------------------------------------------
+column TABLE_NAME format a30
+column TABLE_OWNER format a10
+ SELECT P.TABLE_NAME
+                           ,  P.TABLE_OWNER
+                           , P.PARTITION_NAME
+                           , P.PARTITION_POSITION
+                           , P.NUM_ROWS
+                           , P.TABLESPACE_NAME
+                           , event.GET_HIGH_DATE (P.TABLE_NAME,
+                                                            P.TABLE_OWNER,
+                                                            P.PARTITION_POSITION
+                                                           ) AS TOP_VALUE
+                        FROM ALL_TAB_PARTITIONS P
+                       WHERE  P.TABLE_NAME IN ('EVENTS')
+                      -- AND   P.PARTITION_NAME = 'P3'
+                    ORDER BY event.GET_HIGH_DATE (P.TABLE_NAME,
+                                                            P.TABLE_OWNER,
+                                                            P.PARTITION_POSITION
+                                                           );
+
+ column PARTITION_POSITION format 999
+ column PARTITION_NAME format a10
+ SELECT P.TABLE_NAME
+               --,  P.TABLE_OWNER
+              ,
+               P.PARTITION_NAME,
+               P.PARTITION_POSITION,
+               NVL(P.NUM_ROWS, 0),
+               P.TABLESPACE_NAME,
+               GET_HIGH_DATE(P.TABLE_NAME,
+                             P.TABLE_OWNER,
+                             P.PARTITION_POSITION) AS TOP_VALUE
+          FROM ALL_TAB_PARTITIONS P
+         WHERE P.TABLE_NAME in ( 'OBJECT','OBJECT_EVENT')
+        --AND GET_HIGH_DATE (P.TABLE_NAME,P.TABLE_OWNER,P.PARTITION_POSITION ) > 16000000 
+         ORDER BY GET_HIGH_DATE(P.TABLE_NAME,
+                                P.TABLE_OWNER,
+                                P.PARTITION_POSITION);
+
+
+select partition_name,table_name,high_value,NUM_ROWS
+from all_tab_partitions
+where table_owner in ('EVENT','TECHPACK')
+and table_name ='OBJECT' --in ('OBJECT','OBJECT_EVENT')
+order by PARTITION_POSITION;
+
+select partition_name,table_name,high_value,NUM_ROWS
+from all_tab_partitions
+where table_owner in ('EVENT','TECHPACK')
+and table_name ='OBJECT_EVENT' --in ('OBJECT','OBJECT_EVENT')
+order by PARTITION_POSITION;
+
+--records in present partition        (P65 started)
+select count(*) from object partition(P73);
+
+select count(distinct object_id) from object_event partition(P73);
+
+================================================================
+select partition_name,table_name,high_value,NUM_ROWS
+from all_tab_partitions
+where table_owner in ('EVENT','TECHPACK')
+-- and table_name ='OBJECT' --in ('OBJECT','OBJECT_EVENT')
+order by table_name,partition_name;
+
+================================================================
+column HIGH_VALUE format a15;
+column PARTITION_POSITION noprint ;
+select partition_name,table_name,high_value,NUM_ROWS,PARTITION_POSITION
+from all_tab_partitions
+where table_owner in ('EVENT','TECHPACK')
+and table_name ='OBJECT' --in ('OBJECT','OBJECT_EVENT')
+order by PARTITION_POSITION;
+
+column HIGH_VALUE format a15;
+column PARTITION_POSITION noprint ;
+select partition_name,table_name,high_value,NUM_ROWS,PARTITION_POSITION
+from all_tab_partitions
+where table_owner in ('EVENT','TECHPACK')
+and table_name in ('EVENTS') 
+order by table_name ; --in ('OBJECT','OBJECT_EVENT')
+
+
+
+ select sum(bytes)/1024/1024/1024 as "IN_GB",segment_name as "TABLE" from dba_segments where segment_name
+in  ('MAIL_ITEM','TRACKED_ITEM_BARCODE','EVENTS','OBJECT_EVENT','OBJECT','PRE_ADV_MNFST_LINE','PRE_ADVICE_MNFST')
+group by segment_name
+order by sum(bytes)/1024/1024/1024 ;
+
+select count(*) as "COUNT",to_number(to_char(CREATED,'YYYYMMDD')) as "DATE",to_char(CREATED,'DAY') as "DAY",
+to_number(to_char(CREATED,'HH24')) as "HOUR"
+from mq_jdl_aud where CREATED >=  TO_DATE('22-07-2013 00:00:00', 'DD-MM-YYYY HH24:MI:SS') 
+and CREATED <  TO_DATE('27-07-2013 00:00:00', 'DD-MM-YYYY HH24:MI:SS') 
+group by 
+to_number(to_char(CREATED,'YYYYMMDD')),to_char(CREATED,'DAY'),
+to_number(to_char(CREATED,'HH24')) 
+order by
+to_number(to_char(CREATED,'YYYYMMDD')),
+to_number(to_char(CREATED,'HH24'))  ;
+
+
+
+select count(*) as "COUNT",to_number(to_char(CREATED,'YYYYMMDD')) as "DATE",to_char(CREATED,'DAY')
+from mq_jdl_aud where CREATED >=  TO_DATE('22-07-2013 00:00:00', 'DD-MM-YYYY HH24:MI:SS') 
+and CREATED <  TO_DATE('27-07-2013 00:00:00', 'DD-MM-YYYY HH24:MI:SS')
+group by 
+to_number(to_char(CREATED,'YYYYMMDD')),to_char(CREATED,'DAY')
+ order by
+to_number(to_char(CREATED,'YYYYMMDD')) ;
+
+
+
+ ---------------------------- ---------------------------
+
+
+
+
+
+column OBJECT_NAME format a45
+column status format a30
+   select OBJECT_NAME,OWNER,STATUS,OBJECT_TYPE from dba_objects where owner in
+   ('EVENT','TECHPACK','REPORTS','MD') order by status, obJECT_TYPE,owner ;
+   
+   
+   
+
+
+------------------------------ ---------------------------
+
+column log_date format a18
+column actual_start_date format a18
+column job_name format a30
+column status format a9
+column run_duration format a13
+column additional_info format a70
+select to_char(log_date,'DD-MON-YY HH24:MI:SS') log_date
+,job_name , status
+,to_char(actual_start_date,'DD-MON-YY HH24:MI:SS') AS actual_start_date
+,to_char(REQ_START_DATE,'DD-MON-YY HH24:MI:SS') AS when_start_date
+,run_duration
+,additional_info
+from dba_scheduler_job_run_details
+where job_name = 'QOS_BARCODE_EXTRACT_JOB' and LOG_DATE between systimestamp -1 and systimestamp
+order by actual_start_date;
+
+--------------------------------------------------------------------------------------------------------------------
+
+-->> RTS Items Billed, sales order received---
+   -- (items billed for the 2nd time)        (NOT TO DO)
+
+select count(*) from mail_item where trunc(RTS_BILLED_DATE) = trunc(SYSDATE-1);
+===================================
+stop job
+exec DBMS_SCHEDULER.stop_job ('ADHOC_QOSNEW1',TRUE);
+exec DBMS_SCHEDULER.enable (name => 'INT_EXT_EVENT');
+exec dbms_scheduler.disable('ADHOC_REDLAND_SUN2',TRUE) ;
+
+
+BEGIN
+  -- Enable programs and jobs.
+  DBMS_SCHEDULER.enable (name => 'test_stored_procedure_prog');
+  DBMS_SCHEDULER.enable (name => 'test_full_job_definition');
+
+  -- Disable programs and jobs.
+  DBMS_SCHEDULER.disable (name => 'test_stored_procedure_prog');
+  DBMS_SCHEDULER.disable (name => 'test_full_job_definition');
+END;
+/
+The values for individual attributes of all scheduler objects can be altered using one of the SET_ATTRIBUTE overloads.
+
+BEGIN
+  DBMS_SCHEDULER.set_attribute (
+    name      => 'hourly_schedule',
+    attribute => 'repeat_interval',
+    value     => 'freq=hourly; byminute=30');
+END;
+/
+The values can be set to NULL using the SET_ATTRIBUTE_NULL procedure.
+
+BEGIN
+  DBMS_SCHEDULER.set_attribute_null (
+    name      => 'hourly_schedule',
+    attribute => 'repeat_interval');
+END;
+/
+
+NON_BILLABLE_JOB
+INFERRED_DEL
+
+sqlplus big/bigcsc@bigppr
+
+
+
+=============================================================================================================
+
+
+
+-- Set uptimizer
+alter session set optimizer_index_cost_adj=1;
+
+select  BILLED_DATE,RTS_BILLED_DATE,RTS_SALES_ORDER_NUM,SALES_ORDER_NUM,tib.&&full_barcode Barcode,
+        to_char(','),to_char(evt.EVENT_DATETIME,'yyyy-mm-dd hh24:mi:ss') Event_Datetime,
+        to_char(','),to_char(evt.CREATED_DATETIME,'yyyy-mm-dd hh24:mi:ss') DB_Created_Datetime,
+        to_char(','),substr(evt.rm_event_code,1,6) Code,
+        to_char(','),(SELECT org.name
+              FROM organisation org
+              INNER JOIN object obj1
+                    ON obj1.party_id = org.party_id_organisation
+              INNER JOIN object_event oe2
+                    ON oe2.object_id = obj1.object_id
+              WHERE oe2.event_id = evt.event_id
+              AND obj1.party_id IS NOT NULL) AS Delivery_office,
+        to_char(','),substr(re.internal_status,1,60) Description,
+        to_char(','),evt.BBAY_USER_ID,evt.LATITUDE, evt.LONGITUDE
+from  tracked_item_barcode tib
+inner join mail_item_id mitd
+      on tib.IDENTIFYING_MECHANISM_ID = mitd.IDENTIFYING_MECHANISM_ID
+inner join mail_item mi
+      on mi.mail_item_id = mitd.mail_item_id
+inner join object obj
+      on mi.mail_item_id = obj.mail_item_id
+inner join object_event obje
+      on obj.object_id = obje.object_id
+inner join events evt
+      on obje.event_id = evt.event_id
+inner join rm_event re
+      on evt.rm_event_code=re.code
+where tib.&&full_barcode = 'FL397877975GB'
+order by Barcode,DB_Created_Datetime;
+
+
+-- Fetch RMGTT scans (20110429 to 20110603)
+select /*+ parallel(evt) parallel_index(evt EVENTS_NU2)
+           PARALLEL(tib) parallel_index(tib TRACKED_ITEM_BARCODE_PK)
+           PARALLEL(obj) parallel_index(obj TP_OBJECT_PK)
+           parallel(obje) parallel_index(obje OBJECT_EVENT_U1)
+           parallel(mi) parallel_index(mi TP_MAIL_ITEM_PK)
+           parallel(mii) parallel_index(mii TP_MAIL_ITEM_ID_PK)*/ count(*), tib.&&full_barcode
+from  tracked_item_barcode tib
+inner join mail_item_id mitd
+      on tib.IDENTIFYING_MECHANISM_ID = mitd.IDENTIFYING_MECHANISM_ID
+inner join mail_item mi
+ on mi.mail_item_id = mitd.mail_item_id
+inner join object obj
+      on mi.mail_item_id = obj.mail_item_id
+inner join object_event obje
+      on obj.object_id = obje.object_id
+inner join events partition (P64) evt
+      on obje.event_id = evt.event_id
+inner join tracked_item_barcode_prefix tibp
+      on tib.prefix = tibp.prefix
+where tibp.rmgtt_flag = '1'
+and evt.rm_event_code = 'EVKSP'
+having count(tib.&&full_barcode) > 1
+group by tib.&&full_barcode;
+
+
+select mi.mail_item_id,pam.manifest_id
+from tracked_item_barcode tib
+inner join mail_item_id mitd
+on tib.IDENTIFYING_MECHANISM_ID = mitd.IDENTIFYING_MECHANISM_ID
+inner join mail_item mi
+on mitd.mail_item_id = mi.mail_item_id
+inner join pre_adv_mnfst_line paml
+on paml.manifest_id = mi.manifest_id AND paml.seq_num = mi.seq_num
+inner join pre_advice_mnfst pam
+on paml.manifest_id = pam.manifest_id
+where tib.&&full_barcode='FF978552332GB';
+
+
+-- Notification details
+select /*+ parallel(evt) parallel_index(evt EVENTS_NU5)
+           parallel(obj) parallel_index(obj TP_OBJECT_PK)
+           parallel(mi) parallel_index(mi MAIL_ITEM_NU1)
+           PARALLEL(paml) parallel_index(paml TP_PRE_ADV_MNFST_LN_PK) */ count(*) NOTIFICATION_COUNT,
+           evt.create_date,
+           evt.notification_type_flg NOTIFICATION_TYPE
+           --ca.commercial_account_number ACCOUNT_NUMBER,
+           --ca.account_name ACCOUNT_NAME
+from events evt
+inner join object_event obje
+      on evt.event_id = obje.event_id
+inner join object obj
+      on obj.object_id = obje.object_id
+inner join TECHPACK.mail_item mi
+      on mi.mail_item_id = obj.mail_item_id
+inner join TECHPACK.pre_adv_mnfst_line paml
+      on paml.manifest_id = mi.manifest_id AND paml.seq_num = mi.seq_num
+where evt.notification_type_flg in ('E','S')
+and evt.create_date >=20110801 and evt.create_date <=20111231
+group by evt.create_date,evt.notification_type_flg
+order by evt.create_date,evt.notification_type_flg;
+
+-- Identifying INVALID Objects
+SELECT owner,
+       object_type,
+       object_name,
+       status,
+       last_ddl_time
+FROM   all_objects
+WHERE  status = 'INVALID'
+and owner in ('REPORTS','JAVATP','MD','ESB','EPOD','EVENT','JAVAIN','TECHPACK','JAVASEC','MDM')
+ORDER BY owner, object_type, object_name;
+
+-- Check if INDEXES for table are in INVALID status
+select table_name,INDEX_NAME,STATUS
+from all_indexes
+where owner in ('REPORTS','JAVATP','MD','ESB','EPOD','EVENT','JAVAIN','TECHPACK','JAVASEC','MDM')
+and status='INVALID'
+order by table_name,index_name;
+
+
+-- Create tablespace for a table partition
+create tablespace EVENTS_p16  datafile '+DGPRD_HST_2' size 1m autoextend on;
+
+-- Create new partition for a table
+ALTER TABLE EVENT.EVENTS ADD PARTITION p16 VALUES LESS THAN (20110107) tablespace DATA1 ;
+
+-- Get Free Tablespace list
+SELECT tsu.tablespace_name,
+       CEIL (tsu.used_mb) "size MB",
+       DECODE (CEIL (tsf.free_mb), NULL, 0, CEIL (tsf.free_mb)) "free MB",
+       DECODE (100 - CEIL (tsf.free_mb / tsu.used_mb * 100),
+               NULL,
+               100,
+               100 - CEIL (tsf.free_mb / tsu.used_mb * 100)
+               ) "% used"
+FROM (SELECT tablespace_name,
+             SUM (BYTES) / 1024 / 1024 used_mb
+      FROM dba_data_files
+      GROUP BY tablespace_name
+      UNION ALL
+      SELECT tablespace_name || ' **TEMP**',
+             SUM (BYTES) / 1024 / 1024 used_mb
+      FROM dba_temp_files
+      GROUP BY tablespace_name) tsu,
+      (SELECT tablespace_name, 
+              SUM (BYTES) / 1024 / 1024 free_mb
+       FROM dba_free_space
+       GROUP BY tablespace_name) tsf
+WHERE tsu.tablespace_name = tsf.tablespace_name(+)
+ORDER BY 4
+/
+
+-- Fetch DDL of a table/view/synonym/mview or job
+set heading off;
+set echo off;
+Set pages 999;
+set long 90000;
+select dbms_metadata.get_ddl('VIEW','MBV_TP_EVENT_TYPE') from dual;
+set heading off;
+set echo off;
+Set pages 999;
+set long 90000;
+select dbms_metadata.get_ddl('TYPE','OTYP_VSCAN_REC') from dual;
+
+-- Check is any data is stuck in MQ tables
+select count(*) from mq_received;
+select count(*) from err_mq_received;
+select count(*) from err_mq_received where created_date = 20130909;
+
+-- Check if any data is stuck in PreAdvice Staging tables
+--Delivery Connect or Mobility Service or Blackbay -> ESB -> Oracle
+-- Check Scheduling states of the Preadvice being processed in Oracle
+-- 0: being put into Job, 1: Added to queue, 2: Being processed, 9: Failed state
+select count(*) , PROCESS_STAT, PROCESS_TYPE from STAGE_PRE_ADV_SCHEDULER group by PROCESS_STAT,PROCESS_TYPE;
+select count(*) from stage_pre_advice_data;
+select count(*) from STAGE_PRE_ADVICE_ITEM ;
+select count(*) from err_pre_advice_data;
+select count(*) from err_pre_advice_item;
+select count(*) from err_pre_advice_data where CREATED_DATE =20131113
+select count(*) from err_pre_advice_item where CREATED_DATE=20130904;
+
+-- Check if any data is stuck in Blackbay Staging tables  (COS + DE)
+--Delivery Connect or Mobility Service or Blackbay -> ESB -> Oracle
+select count(*) from ERR_BBAY_SCAN_EVENT;
+select count(*) from ERR_BBAY_SCAN_EVENT where CREATED_DATE=20131113;
+
+-- Check if any data is stuck in Volumetric Staging tables
+-- Royail mail engg -> ESB -> Oracle
+select count(*) from ERR_VOL_SCAN_EVENT;
+select count(*) from ERR_VOL_SCAN_EVENT where CREATED_DATE = 20130124;
+
+select created_datetime,rm_event_code,event_id
+from events
+where create_date= 20130124
+and create_time>090000
+and rm_event_code = 'EVAPA'
+--in ('EVAPA','EVZSO','EVNOI')
+order by created_datetime;
+
+-- Check if PA messages are being received from ESB
+select count(*),created
+from mq_received_aud
+where created > sysdate-1
+group by created
+order by created;
+
+select created_datetime,rm_event_code
+from events
+where create_date= 20130114
+and create_time>105000
+and rm_event_code not in ('EVAPA','EVZAM','EVZDM','EVZRD','EVZLM','EVZRM','EVZSO','EVNOI')
+order by created_datetime;
+
+select description,error_time,error_code,error_id from error where error_date=20110218 order by error_time;
+
+select table_name,last_analyzed,owner
+from all_tables
+where table_name in ('SIGNATURE','MAIL_ITEM','MAIL_ITEM_ID','TRACKED_ITEM_BARCODE','PRE_ADV_MNFST_LINE','ERROR','OBJECT_EVENT','OBJECT','PRE_ADVICE_MNFST','EVENTS','IDENTIFYING_MECHANISM')
+and owner in ('EVENT','TECHPACK')
+order by last_analyzed;
+
+-- Check for Stale Stats
+select table_name,partition_name,last_analyzed,owner
+from dba_tab_statistics
+where table_name in ('SIGNATURE','MAIL_ITEM','MAIL_ITEM_ID','TRACKED_ITEM_BARCODE','PRE_ADV_MNFST_LINE','ERROR','OBJECT_EVENT','OBJECT','PRE_ADVICE_MNFST','EVENTS','IDENTIFYING_MECHANISM')
+and owner in ('EVENT','TECHPACK')
+and STALE_STATS= 'YES'
+order by last_analyzed;
+
+--Check High Value of partitions
+select partition_name,table_name,NUM_ROWS,high_value,TABLESPACE_NAME
+from all_tab_partitions
+where table_owner in ('EVENT','TECHPACK')
+and table_name in ('SIGNATURE','MAIL_ITEM','MAIL_ITEM_ID','TRACKED_ITEM_BARCODE','PRE_ADV_MNFST_LINE','ERROR','OBJECT_EVENT','OBJECT','PRE_ADVICE_MNFST','EVENTS','IDENTIFYING_MECHANISM')
+order by table_name,partition_name;
+
+select to_char(log_date,'DD-MON-YY HH24:MI:SS') log_date
+       ,job_name , status
+       ,to_char(actual_start_date,'DD-MON-YY HH24:MI:SS') AS actual_start_date
+       ,to_char(REQ_START_DATE,'DD-MON-YY HH24:MI:SS') AS when_start_date
+       ,run_duration
+       ,JOB_SUBNAME
+       ,substr(additional_info,1,120)
+from  dba_scheduler_job_run_details
+where trunc(log_date) > trunc(sysdate-1)
+and JOB_NAME like '%EXT_%'
+order by actual_start_date;
+
+-- Change Timezone format in jobs
+set serveroutput on
+BEGIN
+DBMS_SCHEDULER.SET_ATTRIBUTE(NAME => 'IM_BASIC_30',
+                             ATTRIBUTE => 'START_DATE',
+                             VALUE => '06-OCT-2010 01.00.00.600000 AM EUROPE/LONDON'
+                            );
+EXCEPTION
+WHEN others THEN
+DBMS_OUTPUT.PUT_LINE(SQLERRM);
+END;
+/
+
+
+-- Start job manually
+BEGIN
+DBMS_SCHEDULER.CREATE_JOB (
+                          job_name => 'ADH_INFERRED_1211'
+                          ,job_type => 'PLSQL_BLOCK'
+                          ,job_action => 'BEGIN EVENT.INFER_DEL_PKG.INFERRED_DEL; END;'
+                          ,start_date => sysdate
+                          ,enabled => TRUE
+                          ,comments => 'INFER_DEL' );
+EXCEPTION
+WHEN others THEN
+    DBMS_OUTPUT.PUT_LINE('Error occcured running ENABLE_JOB at '||TO_CHAR(SYSDATE,'HH24:MI:SS'));
+    DBMS_OUTPUT.PUT_LINE('Error Code:    '||SQLCODE);
+    DBMS_OUTPUT.PUT_LINE('Error Message: '||SUBSTR(SQLERRM,1,200));
+END;
+/
+
+-- Check for duplicate barcode
+select &&full_barcode,count(&&full_barcode)
+from tracked_item_barcode
+group by &&full_barcode
+having count(&&full_barcode)>1;
+
+-- Check for times for RFC and recon jobs
+select substr(function_name,1,20) NAME,to_char(start_time,'mm/dd/yyyy hh24:mi:ss') as STARTTIME,to_char(end_time,'mm/dd/yyyy hh24:mi:ss') as ENDTIME,status as STATUS
+from scheduler_management
+where function_name = 'RECON'
+and START_TIME>sysdate-1
+order by START_TIME ;
+
+declare
+x CLOB;
+begin
+ select sql_text into x from dba_hist_sqltext where sql_id='8nbkcf31tfu8k';
+dbms_output.put_line(x);
+exception
+when no_data_found then
+dbms_output.put_line('no data found');
+when others then
+dbms_output.put_line(SQLERRM);
+end;
+/
+
+declare
+x clob;
+begin
+select MQ_MESSAGE into x from err_mq_received where mq_rcv_id = 188;
+dbms_output.put_line(substr(x,1,4000));
+dbms_output.put_line(substr(x,4001,8000));
+dbms_output.put_line(substr(x,8001,12000));
+dbms_output.put_line(substr(x,8001,12000));
+dbms_output.put_line(substr(x,12001,16000));
+dbms_output.put_line(substr(x,16001,20000));
+dbms_output.put_line(substr(x,20001,24000));
+dbms_output.put_line(substr(x,24001,28000));
+dbms_output.put_line(substr(x,28001,32000));
+dbms_output.put_line(substr(x,32001,36000));
+dbms_output.put_line(substr(x,36001,40000));
+dbms_output.put_line(substr(x,40001,44000));
+dbms_output.put_line(substr(x,44001,48000));
+dbms_output.put_line(substr(x,48001,52000));
+dbms_output.put_line(substr(x,52001,56000));
+dbms_output.put_line(substr(x,56001,60000));
+dbms_output.put_line(substr(x,60001,64000));
+dbms_output.put_line(substr(x,64001,68000));
+dbms_output.put_line(substr(x,68001,72000));
+dbms_output.put_line(substr(x,72001,76000));
+dbms_output.put_line(substr(x,76001,80000));
+dbms_output.put_line(substr(x,80001,84000));
+dbms_output.put_line(substr(x,84001,88000));
+dbms_output.put_line(substr(x,88001,92000));
+exception
+when no_data_found then
+dbms_output.put_line('no data found');
+when others then
+dbms_output.put_line(SQLERRM);
+end;
+/
+
+-- To confirm whether scan hhas reached Events Database or not
+select MQ_RCV_ID,MQ_MESSAGE,to_char(created,'yyyymmdd hh24:mi:ss') DatTime
+from mq_received_aud
+where MQ_MESSAGE like '%JW044170017GB%'
+and trunc(created) >= trunc(sysdate-10);
+
+-- Check Indexes which are unusable
+select owner, index_name from dba_indexes where status='UNUSABLE';
+
+select substr(vl.MESSAGE,1,75),
+       (vl.sofar/vl.totalwork)* 100 PERCENT,
+       substr(vl.OPNAME,1,25),
+       vl.START_TIME,
+       vl.LAST_UPDATE_TIME,
+       vl.ELAPSED_SECONDS
+from v$session_longops vl
+where vl.totalwork <> vl.sofar;
+
+-- Show user sessions that are executing SQL using V$SESSION
+select sid,
+       to_char(logon_time,'yyyy-mm-dd hh24:mi:ss') logon_time,
+       username,
+       type,
+       status,
+       process,
+       sql_address,
+       sql_hash_value
+from v$session
+where username <> 'SYSTEM'
+and username is not null
+and status = 'ACTIVE';
+
+-- Active sessions
+select S.USERNAME, s.sid, s.osuser, t.sql_id, sql_text
+from v$sqltext_with_newlines t,V$SESSION s
+where t.address =s.sql_address
+and t.hash_value = s.sql_hash_value
+and s.status = 'ACTIVE'
+and s.username <> 'SYSTEM'
+order by s.sid,t.piece;
+
+/***********************************************
+***********************************************/
+
+-- BIG data fetch path: /var/opt/transfers/archive/BIG/TRACKED/incoming/blackbay
+
+--/temp_for_mlewis24/eventsdb
+
+--EXEC utl_file.fremove('LOG_FILES','')
+
+--nohup sqlplus event/XJDVHBC7B4@TODSPRD1 @QoS_Event_Extract_v01.sql > logfile2.log &
+--nohup sqlplus event/XJDVHBC7B4@TODSPRD1 @Tracking_Data.sql > logfile2.log &
+
+--Amazon Wire: U0MX
+
+--huignite - 10.220.207.143
+--huimpdb1 - 172.20.164.201
+
+--EDG1  - huedgpd1
+--sftp 10.5.186.9
+--cd /edg/edgesprd/archive/tracked/from_wire/to_esb
+
+--EDG2 - huedges1
+--sftp 10.5.21.232
+--cd /opt/edgstorage/archive/trackedclients/incoming
+
+--net use t: \\NG171TDSQL281\Badass
+
+--export ORACLE_HOME=/opt/oracle/product/10.2.0
+--export ORACLE_HOME=/opt/oracle/product/10.2.0/db_1
+--export PATH=/opt/oracle/product/10.2.0/bin:$PATH
+--export PATH=export PATH=$ORACLE_HOME/bin:$PATH:.
+--sqlplus event/biscuit@todsdint
+
+-- Production: huimpdb1
+-- DINT: hutpdb01
+-- UAT: huimuat1
+-- SYS: hutrdbc1
+-- PPR: huimoat1
+-- javasec/BH3PPAL8Q6@TODSPRD
+-- event/XJDVHBC7B4@TODSPRD
+
+--nohup sqlplus event/XJDVHBC7B4@TODSPRD1 @QoS_Event_Extract_v03.sql > logfile7.log &
+
+/***********************************************
+***********************************************/
+
+
+         ---tax ticket--3830672
+
+
+select paml.commercial_account_number,paml.AGREEMENT_LINE_ID,tp.wire_number
+from tracked_item_barcode tib
+inner join mail_item_id mitd
+on tib.IDENTIFYING_MECHANISM_ID = mitd.IDENTIFYING_MECHANISM_ID
+inner join mail_item mi
+on mitd.mail_item_id = mi.mail_item_id
+inner join pre_adv_mnfst_line paml
+on paml.manifest_id = mi.manifest_id AND paml.seq_num = mi.seq_num
+inner join pre_advice_mnfst pam
+on paml.manifest_id = pam.manifest_id
+inner join tracking_provision tp
+on paml.AGREEMENT_LINE_ID=tp.AGREEMENT_LINE_ID
+where tib.&&full_barcode='FJ594285807GB';
+=============================================================================================================
+BARCODE RANGE     
+	 SELECT BARCODE_START_NUM,BARCODE_END_NUM,SUBSTR('JC510239377GB',3,8),SUBSTR('JC510239377GB',12,2),CONTRACT_NUM                     FROM   MV_TP_BCD_AGRMNT_LN_DTL   WHERE  
+		SUBSTR('JC510239377GB',3,8) BETWEEN BARCODE_START_NUM AND BARCODE_END_NUM
+       AND   SUBSTR('JC510239377GB',1,2) = BARCODE_PREFIX 
+      AND   SUBSTR('JC510239377GB',12,2)   = BARCODE_SUFFIX 
+-- and CONTRACT_NUM = '209306TS'	  
+		;
+=============================================================================================================
+
+SELECT EDIFACT_PARTNERSHIP_ID,RECEIVER_IDENTIFICATION_DSC,SENDER_IDENTIFICATION_DSC
+                    --INTO LNUM_EDIFACT_PARTNERSHIP_ID,LVCH_RECEIVER_IDFICATION_DSC
+                    FROM BIG_EDIFACT_PARTNERSHIP
+                    WHERE  SENDER_IDENTIFICATION_DSC = 'GB350'
+                    AND  RECEIVER_IDENTIFICATION_DSC like 'GR%' ;
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					==========================================
+					checksum
+					SET VERIFY OFF ;
+undefine full_barcode ; 
+select '&&full_barcode' b,substr('&&full_barcode',11,1) s,decode(mod((substr('&&full_barcode',3,1) * 8 +
+substr('&&full_barcode',4,1) * 6 +
+substr('&&full_barcode',5,1) * 4 +
+substr('&&full_barcode',6,1) * 2 +
+substr('&&full_barcode',7,1) * 3 +
+substr('&&full_barcode',8,1) * 5 +
+substr('&&full_barcode',9,1) * 9 +
+substr('&&full_barcode',10,1)* 7 ),11),0,5,1,0,11 - mod((substr('&&full_barcode',3,1) * 8 +
+substr('&&full_barcode',4,1) * 6 +
+substr('&&full_barcode',5,1) * 4 +
+substr('&&full_barcode',6,1) * 2 +
+substr('&&full_barcode',7,1) * 3 +
+substr('&&full_barcode',8,1) * 5 +
+substr('&&full_barcode',9,1) * 9 +
+substr('&&full_barcode',10,1)* 7 ),11) ) C,decode(substr('&&full_barcode',11,1) - decode(mod((substr('&&full_barcode',3,1) * 8 +
+substr('&&full_barcode',4,1) * 6 +
+substr('&&full_barcode',5,1) * 4 +
+substr('&&full_barcode',6,1) * 2 +
+substr('&&full_barcode',7,1) * 3 +
+substr('&&full_barcode',8,1) * 5 +
+substr('&&full_barcode',9,1) * 9 +
+substr('&&full_barcode',10,1)* 7 ),11),0,5,1,0,11 - mod((substr('&&full_barcode',3,1) * 8 +
+substr('&&full_barcode',4,1) * 6 +
+substr('&&full_barcode',5,1) * 4 +
+substr('&&full_barcode',6,1) * 2 +
+substr('&&full_barcode',7,1) * 3 +
+substr('&&full_barcode',8,1) * 5 +
+substr('&&full_barcode',9,1) * 9 +
+substr('&&full_barcode',10,1)* 7 ),11) ),0,'v','N') VALID from dual 
+;
+
+find /opt/oracle/product/ -name tns* 2>/dev/null
+=============================================
+FL105903518GB
+
+
+select * from nls_database_parameters where parameter like '%CHARACTERSET';
+
+============================================================
+ Please follow the below mentioned steps to restart the MQSALESORDER session to clear the MQ queue.
+1) Login to huimpdb1
+2) Enter : su - rmtrackd and Passwd: orange$$
+3) Enter : runmqsc QMORA01P
+4) Then to check the depth of the queue : dis q(ESB*) curdepth
+5) After entering Step 4) we need to check out for this specific queue depth - ESB_BK.ORACLE_REC.SO.01.OUT_V1
+6) If the queue depth is stuck for over an hour or so, we would need to kill the current running session and run it again. Follow the below steps for that.
+a) ps -ef|grep mqsalesorder
+You would see something like below after entering the above
+rmtrackd 1744912 4030808   0 08:42:19  pts/0  0:00 grep mqsalesorder
+rmtrackd 3891556       1   0 10:51:25      -  0:00 /opt/rmtracked/todsprd/proc/mqgateway/mqsalesorder ESB.REC.SO.01.OUT
+We need to Kill the session with Process Id - 3891556
+b) kill 3891556
+c) crontab -l
+
+The above would produce something like below..
+0,10,20,30,40,50 * * * * /opt/rmtracked/todsprd/proc/mqgateway/chkmqlisteners.sh >/dev/null 2>&1
+       d) Enter : /opt/rmtracked/todsprd/proc/mqgateway/chkmqlisteners.sh
+The above step would restart the MqSalesorder session and you can notice one message being      taken out from the queue everytime  you Kill and Restart the session.
+? Please follow the same steps for checking the queue on HUIMPDB2 as well with only one change.
+On Step 3) Enter : run QMORA02P
+The rest of the Steps as as mentioned above.
+The MQ queue depth can also be tracked from IE link (but it takes some 15 min to update latest depth)..
+cgi-bin/mq_home.cgi    (Open the link with Proxy disabled on VPN)
+Once link has opened , please select “ All Environments” and search for huimpdb1/huimpdb2 when the link opens and you can see the current depth of the MQ queue from where Sales Order messages are picked up by Pro*C code.
+mqget.sh -m QMORA01P -q ESB_BK.ORACLE_REC.SO.01.OUT_V1 -n 140 -browse  (To see stuck messages)
+
+
+=====================================================================================
+select tib.full_barcode Barcode,
+(SELECT org.name
+              FROM organisation org
+              INNER JOIN object obj1
+                    ON obj1.party_id = org.party_id_organisation
+              INNER JOIN object_event oe2
+                    ON oe2.object_id = obj1.object_id
+              WHERE oe2.event_id = evt.event_id
+              AND obj1.party_id IS NOT NULL) AS Delivery_office,
+        to_char(','),substr(re.internal_status,1,60) Description
+       from  tracked_item_barcode tib
+inner join mail_item_id mitd
+      on tib.IDENTIFYING_MECHANISM_ID = mitd.IDENTIFYING_MECHANISM_ID
+inner join mail_item mi
+      on mi.mail_item_id = mitd.mail_item_id
+inner join object obj
+      on mi.mail_item_id = obj.mail_item_id
+inner join object_event obje
+      on obj.object_id = obje.object_id
+inner join events evt
+      on obje.event_id = evt.event_id
+inner join rm_event re
+      on evt.rm_event_code=re.code
+where tib.full_barcode = 'JC510239377GB'
+ ;
+  select job_name,repeat_interval,job_action from all_scheduler_jobs ;
+  
+  select round(db.dbsize,2) db_size,
+round((db.dbsize - (df.free+tmp.temp_used)),2) db_used,
+round((db.dbsize - (df.free+tmp.temp_used))/(db.dbsize)*100,2) db_used_per
+from
+(select sum(bytes) / (1024*1024*1024) as dbsize
+from dba_data_files )db,
+(select sum(bytes) / (1024*1024*1024) as free
+from dba_free_space ) df,
+( select nvl(sum((sr.blocks*p.value))/1024/1024/1024,0) as temp_used
+from v$sort_usage sr,
+     v$parameter p
+where p.NAME = 'db_block_size'
+)tmp ;
